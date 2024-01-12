@@ -280,12 +280,8 @@ class CMD:
 
     async def screen(self, argument: str) -> None:
         """turns the screen on or off"""
-        if argument.upper() == "ON":
-            self.logging.info("turning screen on")
-            await self.bluetooth.send(Common().turn_screen_on())
-        else:
-            self.logging.info("turning screen off")
-            await self.bluetooth.send(Common().turn_screen_off())
+        self.logging.info("turning screen on/off")
+        await self.bluetooth.send(Common().enable_screen(argument.upper() == "ON"))
 
     async def set_brightness(self, argument: int) -> None:
         """sets the brightness of the screen"""

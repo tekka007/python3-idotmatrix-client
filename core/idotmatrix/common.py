@@ -22,37 +22,25 @@ class Common:
             ]
         )
 
-    def turn_screen_off(self) -> bytearray:
-        """Turns the screen off.
-
+    def enable_screen(self, state: bool = True) -> bytearray | None:
+        """ Enables or disables the screen.
+        Args:
+            state (bool): False = disabled, True = enabled. Defaults to True.
         Returns:
             byte array of the command which needs to be sent to the device
         """
-        return bytearray(
-            [
-                5, 
-                0, 
-                7, 
-                1,
-                0,
-            ]
-        )
-
-    def turn_screen_on(self) -> bytearray:
-        """Turns the screen on.
-
-        Returns:
-            byte array of the command which needs to be sent to the device
-        """
-        return bytearray(
-            [
-                5, 
-                0, 
-                7, 
-                1,
-                1,
-            ]
-        )
+        try:
+            return bytearray(
+                [
+                    5, 
+                    0, 
+                    7, 
+                    1,
+                    state % 256,
+                ]
+            )
+        except BaseException as error:
+            logging.error(f"could not enable/disable the screen of the device: {error}")
 
     def flip_screen(self, flip: bool = False) -> bytearray | None:
         """rotates the screen 180 dregrees
